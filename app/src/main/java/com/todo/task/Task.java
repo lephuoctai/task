@@ -72,7 +72,7 @@ public class Task {
     public String getStatus(){
         String status = "Trạng thái: ";
         int dayLeft = dayLeft();
-        if(dayLeft() < 0) {
+        if(dayLeft() <= 0) {
             status += "Qúa hạn (vượt " + (- dayLeft) + " ngày)";
         } else if (dayLeft > 0) {
             status += "Còn hạn (" + dayLeft + " ngày còn lại)";
