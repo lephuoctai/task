@@ -8,9 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -54,37 +51,18 @@ public class MainActivity extends AppCompatActivity {
         String quest = taskQuestInput.getText().toString().trim();
         String date = taskDateCompletedInput.getText().toString().trim();
 
-        if (name.isEmpty() || quest.isEmpty() || date.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!isValidDateFormat(date)) {
-            Toast.makeText(this, "Ngày không đúng định dạng: HH:mm dd-MM-yyyy", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        Task task = new Task(name, quest, date);
-        taskList.add(task);
-
-        TextView view = new TextView(MainActivity.this);
-        view.setText((taskList.indexOf(task) + 1) + " - " + task.toString());
-        taskLayout.addView(view);
-    }
-
-    private boolean isValidDateFormat(String dateStr) {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
-            LocalDateTime.parse(dateStr, formatter);
-            return true;
-        } catch (Exception e) {
-            return false;
+        if (!(name.isEmpty() || quest.isEmpty())) {
+            Task task = new Task(name, quest, date);
+            taskList.add(task);
+            TextView view = new TextView(MainActivity.this);
+            view.setText((taskList.indexOf(task) + 1) + " - " + task.toString());
+            taskLayout.addView(view);
         }
     }
 
     private void printArray() {
         for (Task task : taskList) {
-            // xử lý thêm nếu cần
+            // Tuỳ bạn muốn xử lý gì thêm
         }
     }
 }
