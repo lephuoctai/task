@@ -43,7 +43,7 @@ public class addProjectActivity extends AppCompatActivity {
         int d = calendar.get(Calendar.DAY_OF_MONTH);
 
         new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
-            String dateStr = String.format("%02d/%02d/%d", dayOfMonth, month + 1, year);
+            String dateStr = String.format("00:00 %02d-%02d-%d", dayOfMonth, month + 1, year);
             target.setText(dateStr);
             if (target.getId() == R.id.tvStarDate) startDate = dateStr;
             else if (target.getId() == R.id.tvEndDate) endDate = dateStr;

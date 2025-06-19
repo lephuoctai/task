@@ -9,6 +9,20 @@ public class Task {
     private LocalDateTime dateBegin;
     private LocalDateTime dateCompleted;
 
+    public Task(String name, String quest, String dateBeginStr, String dateCompletedStr) {
+//        Nếu không co san giơ, set default 00:00
+
+        this.name = name;
+        this.quest = quest;
+        if (dateBeginStr != null && !dateBeginStr.isEmpty()) {
+            this.dateBegin = parseDateTime(dateBeginStr);
+        }
+        else {
+            this.dateBegin = LocalDateTime.now();
+        }
+        this.dateCompleted = parseDateTime(dateCompletedStr);
+    }
+//    Khong co ngay bat dau -> now()
     public Task(String name, String quest, String dateCompletedStr) {
         this.name = name;
         this.quest = quest;

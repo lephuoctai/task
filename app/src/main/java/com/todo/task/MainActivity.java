@@ -2,6 +2,7 @@ package com.todo.task;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.util.LocaleData;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,9 +10,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Locale;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class MainActivity extends AppCompatActivity {
+//    Tao tạm một arraylist luu tru cac task
     static ArrayList<Task> taskList = new ArrayList<>();
     private EditText taskNameInput, taskQuestInput, taskDateCompletedInput;
     private LinearLayout taskLayout;
@@ -49,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private void scanTask() {
         String name = taskNameInput.getText().toString().trim();
         String quest = taskQuestInput.getText().toString().trim();
-        String date = taskDateCompletedInput.getText().toString().trim();
+//        String date = taskDateCompletedInput.getText().toString().trim();
+        String date = LocalDateTime.now().toString();
 
         if (!(name.isEmpty() || quest.isEmpty())) {
             Task task = new Task(name, quest, date);
