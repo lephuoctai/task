@@ -2,6 +2,7 @@ package com.todo.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Task {
     private String name;
@@ -17,8 +18,13 @@ public class Task {
     }
 
     private LocalDateTime parseDateTime(String dateStr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy"); // ví dụ định dạng
-        return LocalDateTime.parse(dateStr, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+        try {
+            return LocalDateTime.parse(dateStr, formatter);
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            return LocalDateTime.now();
+        }
     }
 
     public String getName() {
