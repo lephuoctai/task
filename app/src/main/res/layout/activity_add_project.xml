@@ -43,7 +43,7 @@
             android:id="@+id/btnNoti"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="?selectableItemBackgroundBorderless"
+            android:backgroundTint="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_noti"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </LinearLayout>
