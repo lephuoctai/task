@@ -1,50 +1,25 @@
 package com.todo.task;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-    static ArrayList<Task> task_list = new ArrayList<>();
-    public void scanTask() {
-        EditText task_name = findViewById(R.id.task_name);
-        EditText task_quest = findViewById(R.id.task_quest);
-        EditText task_date_completed = findViewById(R.id.task_date_completed);
-
-        String name = task_name.getText().toString().trim();
-        String quest = task_quest.getText().toString().trim();
-        String date_completed = task_date_completed.getText().toString().trim();
-
-        if(!(name.isEmpty() || quest.isEmpty())){
-            LinearLayout task_layout = findViewById(R.id.task_list);
-            TextView view = new TextView(MainActivity.this);
-            Task task = new Task(name, quest, date_completed);
-
-            task_list.add(task);
-            view.setText( (task_list.indexOf(task) + 1) + " - "+ task.toString());
-            task_layout.addView(view);
-
-        }
-    }
-    public void printArray(){
-        for (Task task:task_list) {
-        }
-    }
+    static ArrayList<Task> taskList = new ArrayList<>();
+    private EditText taskNameInput, taskQuestInput, taskDateCompletedInput;
+    private LinearLayout taskLayout;
+    private Button taskAddBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -53,10 +28,41 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Button send_btn = findViewById(R.id.add_btn);
-        send_btn.setOnClickListener(view -> {
+        taskNameInput = findViewById(R.id.task_name);
+        taskQuestInput = findViewById(R.id.task_quest);
+        taskDateCompletedInput = findViewById(R.id.task_date_completed);
+        taskLayout = findViewById(R.id.task_list);
+        taskAddBtn = findViewById(R.id.add_btn);
+
+        taskAddBtn.setOnClickListener(view -> {
             scanTask();
             printArray();
         });
+
+        Button openProjectBtn = findViewById(R.id.btn_open_project);
+        openProjectBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, addProjectActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void scanTask() {
+        String name = taskNameInput.getText().toString().trim();
+        String quest = taskQuestInput.getText().toString().trim();
+        String date = taskDateCompletedInput.getText().toString().trim();
+
+        if (!(name.isEmpty() || quest.isEmpty())) {
+            Task task = new Task(name, quest, date);
+            taskList.add(task);
+            TextView view = new TextView(MainActivity.this);
+            view.setText((taskList.indexOf(task) + 1) + " - " + task.toString());
+            taskLayout.addView(view);
+        }
+    }
+
+    private void printArray() {
+        for (Task task : taskList) {
+            // Tuỳ bạn muốn xử lý gì thêm
+        }
     }
 }
