@@ -26,7 +26,8 @@
             android:layout_height="32dp"
             android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_arrow_back"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            android:contentDescription="Back"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -43,9 +44,8 @@
             android:id="@+id/btnNoti"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:backgroundTint="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_noti"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_noti"/>
     </LinearLayout>
 
     <!-- Task group card -->
@@ -124,6 +124,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/card_project_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -164,6 +165,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/card_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -203,10 +205,11 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/card_start_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:padding="16dp">
 
             <ImageView
@@ -220,24 +223,24 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:layout_marginStart="12dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Star Date"
-                    android:textSize="12sp"
-                    android:textColor="#888888" />
+                    android:textColor="#888888"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvStarDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="01 May, 2022"
-                    android:textSize="15sp"
-                    android:textColor="#222222"/>
+                    android:hint="Nhập ngày bắt đầu"
+                    android:textColor="#222222"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <ImageView
@@ -262,6 +265,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/card_end_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -294,7 +298,7 @@
                     android:id="@+id/tvEndDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30 June, 2022"
+                    android:hint="Nhập ngày kết thúc"
                     android:textSize="15sp"
                     android:textColor="#222222"/>
             </LinearLayout>
@@ -319,48 +323,6 @@
         app:layout_constraintTop_toBottomOf="@id/cardEndDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:gravity="center_vertical"-->
-        <!--            android:padding="16dp">-->
-
-        <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:id="@+id/ivLogo"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_width="56dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_height="56dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:src="@drawable/ic_grocery_logo"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:background="@drawable/bg_circle_orange"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:padding="8dp" />&ndash;&gt;-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/tvLogoTitle"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Grocery\nshop"-->
-        <!--                android:textColor="#24B07B"-->
-        <!--                android:layout_marginStart="10dp"-->
-        <!--                android:textStyle="bold"-->
-        <!--                android:textSize="17sp" />-->
-
-        <!--            <View-->
-        <!--                android:layout_width="0dp"-->
-        <!--                android:layout_height="1dp"-->
-        <!--                android:layout_weight="1" />-->
-
-        <!--            <Button-->
-        <!--                android:id="@+id/btnChangeLogo"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="38dp"-->
-        <!--                android:layout_marginStart="8dp"-->
-        <!--                android:backgroundTint="#E1D8FF"-->
-        <!--                android:text="Change Logo"-->
-        <!--                android:textAllCaps="false"-->
-        <!--                android:textColor="#7E47FF"-->
-        <!--                tools:ignore="TouchTargetSizeCheck" />-->
-        <!--        </LinearLayout>-->
     </androidx.cardview.widget.CardView>
 
     <!-- Add Project Button -->

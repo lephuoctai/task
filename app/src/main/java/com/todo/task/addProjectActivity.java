@@ -4,9 +4,15 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class addProjectActivity extends AppCompatActivity {
+    ArrayList<Task> list = MainActivity.taskList;
+
+    private CardView cardStarDate, cardEndDate;
     private TextView tvTaskGroup, tvStarDate, tvEndDate;
     private EditText etProjectName, etDescription;
     private Button btnAddProject;
@@ -18,6 +24,9 @@ public class addProjectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
 
+        cardStarDate = findViewById(R.id.cardStarDate);
+        cardEndDate = findViewById(R.id.cardEndDate);
+
         btnBack = findViewById(R.id.btnBack);
         btnNoti = findViewById(R.id.btnNoti);
         tvTaskGroup = findViewById(R.id.tvTaskGroup);
@@ -27,12 +36,14 @@ public class addProjectActivity extends AppCompatActivity {
         etDescription = findViewById(R.id.etDescription);
         btnAddProject = findViewById(R.id.btnAddProject);
 
+
+
         btnBack.setOnClickListener(v -> finish());
         btnNoti.setOnClickListener(v -> Toast.makeText(this, "Notification Clicked", Toast.LENGTH_SHORT).show());
         tvTaskGroup.setOnClickListener(v -> Toast.makeText(this, "Change Task Group", Toast.LENGTH_SHORT).show());
 
-        tvStarDate.setOnClickListener(v -> showDatePicker(tvStarDate));
-        tvEndDate.setOnClickListener(v -> showDatePicker(tvEndDate));
+        cardStarDate.setOnClickListener(v -> showDatePicker(tvStarDate));
+        cardEndDate.setOnClickListener(v -> showDatePicker(tvEndDate));
         btnAddProject.setOnClickListener(v -> addProject());
     }
 
