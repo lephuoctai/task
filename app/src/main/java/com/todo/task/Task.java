@@ -44,7 +44,7 @@ public class Task {
         return name;
     }
 
-    // Getter nội dung nhiệm vụ
+    // Getter nội dung
     public String getQuest() {
         return quest;
     }
@@ -60,13 +60,26 @@ public class Task {
     }
 
     /**
-     * Kiểm tra nhiệm vụ đã quá hạn chưa (so với thời điểm hiện tại).
-     * @return true nếu đã trễ hạn
+     * Trả về số ngày còn lại
      */
-    public boolean isOverdue() {
-        return LocalDateTime.now().isAfter(dateCompleted);
+    public int dayLeft() {
+        return dateCompleted.getDayOfYear() - LocalDateTime.now().getDayOfYear();
     }
 
+    /**
+     * string trả về trạng thái của Task
+     */
+    public String getStatus(){
+        String status = "Trạng thái: ";
+        int dayLeft = dayLeft();
+        if(dayLeft() < 0) {
+            status += "Qúa hạn (vượt " + (- dayLeft) + " ngày)";
+        } else if (dayLeft > 0) {
+            status += "Còn hạn (" + dayLeft + " ngày còn lại)";
+        }
+
+        return status;
+    }
     /**
      * Định dạng LocalDateTime thành chuỗi "HH:mm dd-MM-yyyy".
      */

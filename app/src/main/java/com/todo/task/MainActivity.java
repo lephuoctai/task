@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             Task task = new Task(name, quest, date);
             taskList.add(task);
             TextView view = new TextView(MainActivity.this);
-            view.setText((taskList.indexOf(task) + 1) + " - " + task.toString());
+            view.setText((taskList.indexOf(task) + 1) + " - " + task.getName() + " | " + task.getStatus());
             taskLayout.addView(view);
         }
     }
