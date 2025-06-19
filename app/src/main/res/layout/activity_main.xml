@@ -19,12 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+<!--        Tai rename "add project" thanh "open project" -->
         <Button
             android:id="@+id/btn_open_project"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Add Project" />
+            android:text="Open Project" />
 
         <LinearLayout
             android:id="@+id/task_list"
