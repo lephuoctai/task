@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_task_item"
+    android:padding="8dp"
+    android:layout_marginBottom="7dp"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_project"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="Project"
+        />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grocery Shopping App"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#222"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: Overdue (5 days over)"
+            android:textColor="#FF5E5E"
+            android:textSize="13sp"
+            android:layout_marginTop="1dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_dropdown"
+        android:background="@android:color/transparent"
+        android:contentDescription="Expand"
+        android:layout_marginEnd="2dp"
+        android:tint="#222222"/>
+</LinearLayout>

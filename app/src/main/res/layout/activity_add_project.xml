@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F6F7FB"
-    tools:context=".MainActivity">
+    tools:context=".addProjectActivity">
 
     <!-- Thanh tiêu đề -->
     <LinearLayout
@@ -44,7 +44,7 @@
             android:id="@+id/btnNoti"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:backgroundTint="?selectableItemBackgroundBorderless"
+            android:backgroundTint="#F6F7FB"
             android:src="@drawable/ic_noti"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </LinearLayout>
