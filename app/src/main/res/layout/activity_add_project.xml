@@ -13,12 +13,13 @@
         android:id="@+id/titleBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="56dp"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/btnBack"
@@ -31,19 +32,19 @@
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="Add Project"
+            android:textColor="#222222"
             android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="#222222" />
+            android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/btnNoti"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="?selectableItemBackgroundBorderless"
+            android:backgroundTint="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_noti"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </LinearLayout>
@@ -205,8 +206,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:padding="16dp">
 
             <ImageView
@@ -220,24 +221,24 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:layout_marginStart="12dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Star Date"
-                    android:textSize="12sp"
-                    android:textColor="#888888" />
+                    android:textColor="#888888"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/tvStarDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="01 May, 2022"
-                    android:textSize="15sp"
-                    android:textColor="#222222"/>
+                    android:textColor="#222222"
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <ImageView
@@ -370,7 +371,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="128dp"
         android:backgroundTint="#7450F7"
         android:text="Add Project"
         android:textAllCaps="false"
