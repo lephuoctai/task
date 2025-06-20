@@ -119,6 +119,13 @@ public class ProjectListActivity extends AppCompatActivity {
         renderTasks();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Lưu lại danh sách Task mỗi khi rời khỏi ProjectListActivity
+        TaskStorage.saveTasks(this, taskList);
+    }
+
     private void updateSortTypeText() {
         if (tvSortType == null) return;
         if (sortType == SortType.NAME) {

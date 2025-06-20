@@ -26,7 +26,7 @@ import java.util.Arrays;
 //    }
 //}
 
-public class MainSecondary {
+public class ExampleUnitTest {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
         System.out.println("Hello\n World");

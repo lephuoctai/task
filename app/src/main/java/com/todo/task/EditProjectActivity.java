@@ -77,6 +77,8 @@ public class EditProjectActivity extends AppCompatActivity {
                 task.setGroup(newGroup);
                 task.setDateBegin(newStart);
                 task.setDateCompleted(newEnd);
+                // Lưu lại danh sách Task sau khi sửa
+                TaskStorage.saveTasks(this, MainActivity.taskList);
                 // Trả kết quả về ProjectListActivity
                 setResult(RESULT_OK);
             }

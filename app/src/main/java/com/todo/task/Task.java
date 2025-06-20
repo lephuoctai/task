@@ -8,12 +8,9 @@ public class Task {
     private String quest;                 // Nội dung hoặc mô tả nhiệm vụ
     private LocalDateTime dateBegin;     // Ngày bắt đầu nhiệm vụ
     private LocalDateTime dateCompleted; // Hạn chót hoàn thành nhiệm vụ
-    private String group;                 // Nhóm nhiệm vụ
+    private String group;                // Nhóm nhiệm vụ
 
-    /**
-     * Constructor tạo Task có cả ngày bắt đầu và ngày hoàn thành.
-     * Nếu chuỗi ngày bắt đầu không hợp lệ hoặc rỗng, sẽ lấy thời gian hiện tại.
-     */
+    // Constructor đầy đủ
     public Task(String name, String quest, String dateBeginStr, String dateCompletedStr, String group) {
         this.name = name;
         this.quest = quest;
@@ -22,10 +19,7 @@ public class Task {
         this.group = group;
     }
 
-    /**
-     * Constructor tạo Task chỉ với ngày hoàn thành.
-     * Ngày bắt đầu sẽ được set là thời điểm hiện tại.
-     */
+    // Constructor chỉ có ngày hoàn thành
     public Task(String name, String quest, String dateCompletedStr) {
         this.name = name;
         this.quest = quest;
@@ -33,10 +27,11 @@ public class Task {
         this.dateCompleted = parseDateTime(dateCompletedStr);
     }
 
-    /**
-     * Chuyển chuỗi định dạng "HH:mm dd-MM-yyyy" thành đối tượng LocalDateTime.
-     */
+    // Chuyển chuỗi định dạng "HH:mm dd-MM-yyyy" thành LocalDateTime
     private LocalDateTime parseDateTime(String dateStr) {
+        if (dateStr == null || dateStr.trim().isEmpty()) {
+            return null;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
         return LocalDateTime.parse(dateStr, formatter);
     }
@@ -51,78 +46,92 @@ public class Task {
         return quest;
     }
 
-    // Trả về ngày bắt đầu đã được định dạng lại thành chuỗi
+    // Trả về ngày bắt đầu dưới dạng chuỗi
     public String getDateBegin() {
         return formatDateTime(dateBegin);
     }
 
-    // Trả về ngày hoàn thành đã được định dạng lại thành chuỗi
+    // Trả về ngày hoàn thành dưới dạng chuỗi
     public String getDateCompleted() {
         return formatDateTime(dateCompleted);
     }
 
-    // Getter nhóm nhiệm vụ
+    // Getter nhóm
     public String getGroup() {
         return group;
     }
 
-    // Setter tên nhiệm vụ
+    // Setter tên
     public void setName(String name) {
         this.name = name;
     }
 
-    // Setter nội dung nhiệm vụ
+    // Setter nội dung
     public void setQuest(String quest) {
         this.quest = quest;
     }
 
-    // Setter nhóm nhiệm vụ
+    // Setter nhóm
     public void setGroup(String group) {
         this.group = group;
     }
 
-    // Setter ngày bắt đầu (dạng chuỗi)
+    // Setter ngày bắt đầu
     public void setDateBegin(String dateBeginStr) {
         this.dateBegin = parseDateTime(dateBeginStr);
     }
 
-    // Setter ngày hoàn thành (dạng chuỗi)
+    // Setter ngày hoàn thành
     public void setDateCompleted(String dateCompletedStr) {
         this.dateCompleted = parseDateTime(dateCompletedStr);
     }
 
-    /**
-     * Trả về số ngày còn lại
-     */
+    // Tính số ngày còn lại
     public int dayLeft() {
-        return dateCompleted.getDayOfYear() - LocalDateTime.now().getDayOfYear();
+        if (dateCompleted == null) {
+            return Integer.MAX_VALUE; // hoặc -1 nếu muốn báo lỗi
+        }
+        try {
+            LocalDateTime now = LocalDateTime.now();
+            if (dateCompleted.toLocalDate() == null) return Integer.MAX_VALUE;
+            if (now.toLocalDate() == null) return Integer.MAX_VALUE;
+            return (int) java.time.Duration.between(now.toLocalDate().atStartOfDay(), dateCompleted.toLocalDate().atStartOfDay()).toDays();
+        } catch (Exception e) {
+            return Integer.MAX_VALUE;
+        }
     }
 
-    /**
-     * string trả về trạng thái của Task
-     */
-    public String getStatus(){
-        String status = "Trạng thái: ";
+
+    // Trạng thái deadline
+    public String getStatus() {
+        if (dateCompleted == null) {
+            return "Trạng thái: Không xác định (thiếu ngày hoàn thành)";
+        }
+
         int dayLeft = dayLeft();
-        if(dayLeft() <= 0) {
-            status += "Qúa hạn (vượt " + (- dayLeft) + " ngày)";
-        } else if (dayLeft > 0) {
+        String status = "Trạng thái: ";
+
+        if (dayLeft <= 0) {
+            status += "Quá hạn (vượt " + (-dayLeft) + " ngày)";
+        } else {
             status += "Còn hạn (" + dayLeft + " ngày còn lại)";
         }
 
         return status;
     }
-    /**
-     * Định dạng LocalDateTime thành chuỗi "HH:mm dd-MM-yyyy".
-     */
+
+    // Định dạng ngày thành chuỗi
     private String formatDateTime(LocalDateTime dateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
-        return dateTime.format(formatter);
+        if (dateTime == null) return "Không xác định";
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+            return dateTime.format(formatter);
+        } catch (Exception e) {
+            return "Không xác định";
+        }
     }
 
-    /**
-     * Hiển thị thông tin Task dưới dạng chuỗi: name | quest | dateBegin | dateCompleted
-     */
+    // Hiển thị thông tin Task
     @Override
     public String toString() {
         return name + " | " + quest + " | " + getDateBegin() + " | " + getDateCompleted() + " | " + group;

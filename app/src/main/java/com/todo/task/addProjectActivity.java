@@ -144,7 +144,8 @@ public class addProjectActivity extends AppCompatActivity {
             Task task = new Task(name, desc, startDate, endDate, group);
             list.add(task);
 
-            // Quay về màn hình trước
+            // Sau khi thêm task mới vào list
+            TaskStorage.saveTasks(this, list);
             finish();
         }
     }

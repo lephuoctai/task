@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Đọc danh sách Task từ file khi khởi động app
+        taskList = new ArrayList<>(TaskStorage.loadTasks(this));
+
         // Gắn lại phần padding tự động nếu thiết bị có thanh điều hướng ảo
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
