@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/addProjectRoot"
+    android:id="@+id/editProjectRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F6F7FB"
-    tools:context=".addProjectActivity">
+    tools:context=".EditProjectActivity">
 
     <!-- Thanh tiêu đề -->
     <LinearLayout
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Thêm dự án"
+            android:text="Chỉnh sửa dự án"
             android:textColor="#222222"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -76,8 +76,6 @@
                 android:layout_height="36dp"
                 android:src="@drawable/ic_task_work"
                 android:padding="8dp"/>
-            <!--                android:background="@drawable/bg_circle_pink"-->
-
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -217,8 +215,6 @@
                 android:padding="8dp"
                 android:src="@drawable/ic_calendar" />
 
-            <!--                android:background="@drawable/bg_circle_purple"-->
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -275,8 +271,6 @@
                 android:layout_height="36dp"
                 android:src="@drawable/ic_calendar"
                 android:padding="8dp"/>
-            <!--                android:background="@drawable/bg_circle_purple"-->
-
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -308,63 +302,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Logo + Change logo -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardLogo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="12dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="3dp"
-        app:layout_constraintTop_toBottomOf="@id/cardEndDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:gravity="center_vertical"-->
-        <!--            android:padding="16dp">-->
-
-        <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:id="@+id/ivLogo"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_width="56dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_height="56dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:src="@drawable/ic_grocery_logo"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:background="@drawable/bg_circle_orange"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:padding="8dp" />&ndash;&gt;-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/tvLogoTitle"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="Grocery\nshop"-->
-        <!--                android:textColor="#24B07B"-->
-        <!--                android:layout_marginStart="10dp"-->
-        <!--                android:textStyle="bold"-->
-        <!--                android:textSize="17sp" />-->
-
-        <!--            <View-->
-        <!--                android:layout_width="0dp"-->
-        <!--                android:layout_height="1dp"-->
-        <!--                android:layout_weight="1" />-->
-
-        <!--            <Button-->
-        <!--                android:id="@+id/btnChangeLogo"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="38dp"-->
-        <!--                android:layout_marginStart="8dp"-->
-        <!--                android:backgroundTint="#E1D8FF"-->
-        <!--                android:text="Change Logo"-->
-        <!--                android:textAllCaps="false"-->
-        <!--                android:textColor="#7E47FF"-->
-        <!--                tools:ignore="TouchTargetSizeCheck" />-->
-        <!--        </LinearLayout>-->
-    </androidx.cardview.widget.CardView>
-
     <!-- Add Project Button -->
     <Button
         android:id="@+id/btnAddProject"
@@ -374,7 +311,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="128dp"
         android:backgroundTint="#7450F7"
-        android:text="Thêm Dự Án"
+        android:text="Lưu thay đổi"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="18sp"
@@ -385,3 +322,4 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

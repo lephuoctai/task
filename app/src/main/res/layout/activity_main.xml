@@ -5,77 +5,59 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="24dp"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="275dp"
+        android:layout_height="272dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="128dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-        <Button
-            android:id="@+id/btn_open_project"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Add Project" />
+        app:srcCompat="@drawable/gs_logo" />
 
-        <LinearLayout
-            android:id="@+id/task_list"
-            android:paddingTop="20dp"
-            android:layout_width="340dp"
-            android:layout_height="468dp"
-            android:orientation="vertical" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:gravity="center"
+        android:text="@string/manage_future"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-        <LinearLayout
-            android:layout_width="340dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/version"
+        android:textColor="#6E6A7C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <EditText
-                android:id="@+id/task_name"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:hint="Task name"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/task_quest"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:ems="10"
-                android:hint="Task content"
-                android:inputType="text" />
-
-            <EditText
-                android:id="@+id/task_date_completed"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:ems="10"
-                android:hint="Date completed"
-                android:inputType="text" />
-
-            <Button
-                android:id="@+id/add_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:layout_marginTop="10dp"
-                android:text="Add"/>
-
-
-            <!-- Nút mở addProjectActivity -->
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="24dp"
+        android:backgroundTint="#5F33E1"
+        android:drawableRight="@drawable/ic_arrow_forward"
+        android:text="@string/start"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

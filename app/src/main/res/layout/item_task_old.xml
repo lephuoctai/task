@@ -21,7 +21,8 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="10dp">
+        android:layout_marginStart="10dp"
+        android:id="@+id/infoLayout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,6 +42,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/ic_dropdown"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@drawable/ic_dropdown"

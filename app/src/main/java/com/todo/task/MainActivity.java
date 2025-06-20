@@ -1,68 +1,53 @@
 package com.todo.task;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+
+    // Danh sách các Task dùng chung toàn app (dùng static để truy cập từ activity khác)
     static ArrayList<Task> taskList = new ArrayList<>();
-    private EditText taskNameInput, taskQuestInput, taskDateCompletedInput;
-    private LinearLayout taskLayout;
-    private Button taskAddBtn;
+    // Danh sách ghi chú dùng chung toàn app
+    public static ArrayList<Note> noteList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Gắn lại phần padding tự động nếu thiết bị có thanh điều hướng ảo
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        taskNameInput = findViewById(R.id.task_name);
-        taskQuestInput = findViewById(R.id.task_quest);
-        taskDateCompletedInput = findViewById(R.id.task_date_completed);
-        taskLayout = findViewById(R.id.task_list);
-        taskAddBtn = findViewById(R.id.add_btn);
 
-        taskAddBtn.setOnClickListener(view -> {
-            scanTask();
-            printArray();
-        });
-
-        Button openProjectBtn = findViewById(R.id.btn_open_project);
-        openProjectBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, addProjectActivity.class);
-            startActivity(intent);
-        });
-    }
-
-    private void scanTask() {
-        String name = taskNameInput.getText().toString().trim();
-        String quest = taskQuestInput.getText().toString().trim();
-        String date = taskDateCompletedInput.getText().toString().trim();
-
-        if (!(name.isEmpty() || quest.isEmpty())) {
-            Task task = new Task(name, quest, date);
-            taskList.add(task);
-            TextView view = new TextView(MainActivity.this);
-            view.setText((taskList.indexOf(task) + 1) + " - " + task.toString());
-            taskLayout.addView(view);
+        // Gán sự kiện cho nút "Bắt đầu" để mở ProjectListActivity
+        Button startBtn = findViewById(R.id.button2);
+        if (startBtn != null) {
+            startBtn.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, ProjectListActivity.class);
+                startActivity(intent);
+            });
         }
     }
 
-    private void printArray() {
-        for (Task task : taskList) {
-            // Tuỳ bạn muốn xử lý gì thêm
-        }
+    /**
+     * Hàm onResume được gọi mỗi lần màn hình này được hiển thị lại (kể cả sau khi quay lại từ AddProject)
+     * → Dùng để render lại danh sách task
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // renderTasks(); // Đã chuyển sang ProjectListActivity, không cần render ở đây nữa
     }
 }

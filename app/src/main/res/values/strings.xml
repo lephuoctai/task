@@ -1,3 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">task</string>
+    <string name="app_name">Task List</string>
+    <string name="start">Bắt đầu</string>
+    <string name="create_new_project">Tạo mới dự án</string>
+    <string name="view_project_list">Xem danh sách project</string>
+    <string name="recent_project">Dự án gần đây</string>
+    <string name="old_project">Dự án cũ</string>
+    <string name="sort">Sắp xếp</string>
+    <string name="sort_az">Tên (A-Z)</string>
+    <string name="sort_za">Tên (Z-A)</string>
+    <string name="sort_date_nearest">Ngày (Gần nhất)</string>
+    <string name="sort_date_farthest">Ngày (Xa nhất)</string>
+    <string name="project_expiring">Project sắp hết hạn (&lt;3 ngày)</string>
+    <string name="no_project_expiring">Không có project nào sắp hết hạn!</string>
+    <string name="add_project">Thêm dự án</string>
+    <string name="project_name_empty">Tên Công việc không được trống!</string>
+    <string name="fill_all_info">Vui lòng điền thông tin đầy đủ!</string>
+    <string name="invalid_end_date">Ngày hoàn thành không hợp lệ!</string>
+    <string name="project_added">Công việc đã thêm:</string>
+    <string name="from_date">Từ ngày:</string>
+    <string name="to_date">Đến ngày:</string>
+    <string name="select_group">Chọn nhóm công việc</string>
+    <string name="work">Công việc</string>
+    <string name="personal">Cá nhân</string>
+    <string name="study">Học tập</string>
+    <string name="other">Khác</string>
+    <string name="close">Đóng</string>
+    <string name="delete">Xóa</string>
+    <string name="edit">Sửa</string>
+    <string name="description">Mô tả</string>
+    <string name="group">Nhóm</string>
+    <string name="start_date">Bắt đầu</string>
+    <string name="end_date">Kết thúc</string>
+    <string name="status">Trạng thái</string>
+    <string name="recent">Gần đây</string>
+    <string name="old">Cũ</string>
+    <string name="version">Phiên bản 1.0.1</string>
+    <string name="manage_future">Quản lý tương lai của bạn với Task List</string>
 </resources>

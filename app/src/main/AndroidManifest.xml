@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".addProjectActivity" />
+        <activity android:name=".ProjectListActivity" />
+        <activity android:name=".EditProjectActivity" />
     </application>
 
 </manifest>
