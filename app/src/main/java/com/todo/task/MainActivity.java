@@ -2,12 +2,18 @@ package com.todo.task;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.*;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.todo.task.SignInUp.SignIn;
+import com.todo.task.user.User;
 
 import java.util.ArrayList;
 
@@ -21,24 +27,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         // Đọc danh sách Task từ file khi khởi động app
         taskList = new ArrayList<>(TaskStorage.loadTasks(this));
+        // Nếu người dùng đã đăng nhập thì chuyển hướng đến welcome_screen
+        if(User.isExist()) {
+            Log.d("TM", "onCreate: Fbase mail:" + FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            Log.d("TM", "onCreate: User uid:" + User.getInstance().getUid());
+            Log.d("TM", "onCreate: User name:" + User.getInstance().getName());
+            Log.d("TM", "onCreate: Fbase uid:" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+            Log.d("TM", "onCreate: Fbase name:" + FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
-        // Gắn lại phần padding tự động nếu thiết bị có thanh điều hướng ảo
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+            // Chuyển hướng đến welcome_screen
+            Intent intent = new Intent(this, WelcomeScreen.class);
+            // Truyền tên người dùng vào intent
+            String userName = User.getInstance().getName();
+            intent.putExtra("userName", userName);
+
+            startActivity(intent);
+        }
 
 
-        // Gán sự kiện cho nút "Bắt đầu" để mở ProjectListActivity
+        // Chuyển hướng đến sign_in khi nhấn nút "Bắt đầu"
         Button startBtn = findViewById(R.id.button2);
         if (startBtn != null) {
             startBtn.setOnClickListener(v -> {
-                Intent intent = new Intent(MainActivity.this, ProjectListActivity.class);
+                Intent intent = new Intent(MainActivity.this, SignIn.class);
                 startActivity(intent);
             });
         }

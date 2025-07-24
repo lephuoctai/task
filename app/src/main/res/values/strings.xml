@@ -37,4 +37,7 @@
     <string name="old">Cũ</string>
     <string name="version">Phiên bản 1.0.1</string>
     <string name="manage_future">Quản lý tương lai của bạn với Task List</string>
+
+    <string name="dang_nhap">Đăng Nhập</string>
+    <string name="dang_ky">Đăng Ký</string>
 </resources>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    tools:context=".WelcomeScreen"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="32dp"
+    android:background="@drawable/background"
+    >
+    <ImageView
+        android:id="@+id/image_letstart"
+        android:layout_width="284dp"
+        android:layout_height="284dp"
+
+        android:src="@drawable/letstart"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"
+        />
+    <TextView
+        android:id="@+id/welcome_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+
+        android:text=" cùng bắt đầu công việc nào!"
+        android:fontFamily="sans-serif"
+        android:textSize="24dp"
+        android:textFontWeight="600"
+        android:textAlignment="center"
+        android:textColor="@color/dark"
+
+
+        app:layout_constraintTop_toBottomOf="@id/image_letstart"
+        app:layout_constraintEnd_toEndOf="@id/image_letstart"
+        app:layout_constraintStart_toStartOf="@id/image_letstart"
+        />
+    <TextView
+        android:id="@+id/version_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+
+        android:text="Version 1.0.1"
+        android:fontFamily="sans-serif"
+        android:textSize="15dp"
+        android:textFontWeight="600"
+        android:textAlignment="center"
+        android:textColor="@color/black25"
+
+        app:layout_constraintTop_toBottomOf="@id/welcome_text"
+        app:layout_constraintEnd_toEndOf="@id/image_letstart"
+        app:layout_constraintStart_toStartOf="@id/image_letstart"
+        />
+    <ImageButton
+        android:id="@+id/btn_bg"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_btn"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/image_letstart"
+        app:layout_constraintStart_toStartOf="@id/image_letstart"
+        app:layout_constraintTop_toBottomOf="@id/version_text"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Bắt đầu"
+        android:fontFamily="sans-serif"
+        android:textSize="16dp"
+        android:textFontWeight="600"
+        android:textAlignment="center"
+        android:textColor="@color/light"
+
+        app:layout_constraintTop_toTopOf="@id/btn_bg"
+        app:layout_constraintStart_toStartOf="@id/btn_bg"
+        app:layout_constraintEnd_toEndOf="@id/btn_bg"
+        app:layout_constraintBottom_toBottomOf="@id/btn_bg"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-70dp"
+
+        android:src="@drawable/shadow_btn"
+
+        app:layout_constraintBottom_toBottomOf="@id/btn_bg"
+        app:layout_constraintStart_toStartOf="@id/btn_bg"
+        app:layout_constraintEnd_toEndOf="@id/btn_bg"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
