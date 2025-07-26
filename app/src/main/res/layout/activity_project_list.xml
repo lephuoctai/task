@@ -123,36 +123,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/btnNewTask">
-        <!-- Recent project label -->
-        <TextView
-            android:id="@+id/tvRecentLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dự án gần đây"
-            android:textColor="#979797"
-            android:textSize="12sp"
-            android:paddingTop="3dp"
-            android:paddingBottom="5dp"/>
-        <LinearLayout
-            android:id="@+id/list_recent"
+        <!-- Scroll View để có thể cuộn danh sách dự án -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
-        <!-- Old project label -->
-        <TextView
-            android:id="@+id/tvOldLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dự án cũ"
-            android:textColor="#979797"
-            android:textSize="12sp"
-            android:paddingTop="15dp"
-            android:paddingBottom="5dp"/>
-        <LinearLayout
-            android:id="@+id/list_old"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Recent project label -->
+                <TextView
+                    android:id="@+id/tvRecentLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dự án gần đây"
+                    android:textColor="#979797"
+                    android:textSize="12sp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="5dp"/>
+
+
+                <LinearLayout
+                    android:id="@+id/list_recent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+                <!-- Old project label -->
+                <TextView
+                    android:id="@+id/tvOldLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dự án cũ"
+                    android:textColor="#979797"
+                    android:textSize="12sp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="5dp"/>
+
+                <LinearLayout
+                    android:id="@+id/list_old"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
     <!-- New Task Button -->
@@ -161,7 +178,7 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="60dp"
         android:backgroundTint="#7467F0"
         android:text="Dự Án Mới"
         android:textAllCaps="false"
@@ -169,6 +186,7 @@
         android:textSize="18sp"
         android:drawableLeft="@drawable/ic_add"
         android:gravity="center"
+        android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

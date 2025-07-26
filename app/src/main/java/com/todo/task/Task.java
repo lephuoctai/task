@@ -9,6 +9,7 @@ public class Task {
     private LocalDateTime dateBegin;     // Ngày bắt đầu nhiệm vụ
     private LocalDateTime dateCompleted; // Hạn chót hoàn thành nhiệm vụ
     private String group;                // Nhóm nhiệm vụ
+    private LocalDateTime updatedAt; // Thời gian chỉnh sửa gần nhất
 
     // Constructor đầy đủ
     public Task(String name, String quest, String dateBeginStr, String dateCompletedStr, String group) {
@@ -17,6 +18,7 @@ public class Task {
         this.dateBegin = parseDateTime(dateBeginStr);
         this.dateCompleted = parseDateTime(dateCompletedStr);
         this.group = group;
+        this.updatedAt = LocalDateTime.now();
     }
 
     // Constructor chỉ có ngày hoàn thành
@@ -25,6 +27,7 @@ public class Task {
         this.quest = quest;
         this.dateBegin = LocalDateTime.now();
         this.dateCompleted = parseDateTime(dateCompletedStr);
+        this.updatedAt = LocalDateTime.now();
     }
 
     // Chuyển chuỗi định dạng "HH:mm dd-MM-yyyy" thành LocalDateTime
@@ -61,29 +64,49 @@ public class Task {
         return group;
     }
 
+    // Getter thời gian chỉnh sửa
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     // Setter tên
     public void setName(String name) {
         this.name = name;
+        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
     }
 
     // Setter nội dung
     public void setQuest(String quest) {
         this.quest = quest;
+        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
     }
 
     // Setter nhóm
     public void setGroup(String group) {
         this.group = group;
+        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
     }
 
     // Setter ngày bắt đầu
     public void setDateBegin(String dateBeginStr) {
         this.dateBegin = parseDateTime(dateBeginStr);
+        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
     }
 
     // Setter ngày hoàn thành
     public void setDateCompleted(String dateCompletedStr) {
         this.dateCompleted = parseDateTime(dateCompletedStr);
+        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
+    }
+
+    // Cập nhật thông tin nhiệm vụ
+    public void updateTask(String name, String quest, String dateBeginStr, String dateCompletedStr, String group) {
+        this.name = name;
+        this.quest = quest;
+        this.dateBegin = parseDateTime(dateBeginStr);
+        this.dateCompleted = parseDateTime(dateCompletedStr);
+        this.group = group;
+        this.updatedAt = LocalDateTime.now();
     }
 
     // Tính số ngày còn lại

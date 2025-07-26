@@ -1,13 +1,15 @@
 package com.todo.task;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class ProjectListActivity extends AppCompatActivity {
     private LinearLayout listRecent, listOld;
@@ -27,6 +29,7 @@ public class ProjectListActivity extends AppCompatActivity {
 
         // Nút quay lại
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+
         // Nút thông báo: Hiển thị tên các project còn dưới 3 ngày
         findViewById(R.id.btnNoti).setOnClickListener(v -> {
             StringBuilder sb = new StringBuilder();
@@ -42,10 +45,12 @@ public class ProjectListActivity extends AppCompatActivity {
                 .setPositiveButton("Đóng", null)
                 .show();
         });
+
         // Nút thêm mới
-        findViewById(R.id.btnNewTask).setOnClickListener(v -> {
-            startActivity(new android.content.Intent(this, addProjectActivity.class));
-        });
+        findViewById(R.id.btnNewTask).setOnClickListener(v ->
+            startActivity(new android.content.Intent(this, addProjectActivity.class))
+        );
+
         // Sắp xếp khi nhấn vào icon sort
         ImageView sortBtn = findViewById(R.id.ic_sort);
         if (sortBtn != null) {
@@ -76,8 +81,9 @@ public class ProjectListActivity extends AppCompatActivity {
                         renderTasks();
                     })
                     .show();
-        });
+            });
         }
+
         // Nút dropdown ở phần sort: ví dụ hiển thị menu chọn kiểu sort
         ImageView sortDropdownBtn = findViewById(R.id.sort_ic_dropdown);
         if (sortDropdownBtn != null) {
@@ -122,7 +128,6 @@ public class ProjectListActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        // Lưu lại danh sách Task mỗi khi rời khỏi ProjectListActivity
         TaskStorage.saveTasks(this, taskList);
     }
 
@@ -138,73 +143,133 @@ public class ProjectListActivity extends AppCompatActivity {
     private void renderTasks() {
         listRecent.removeAllViews();
         listOld.removeAllViews();
-        // Sắp xếp theo lựa chọn
-        if (sortType == SortType.NAME) {
-            if (isSortAZ) {
-                Collections.sort(taskList, Comparator.comparing(Task::getName));
-            } else {
-                Collections.sort(taskList, Comparator.comparing(Task::getName).reversed());
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        // Sắp xếp theo thời gian chỉnh sửa gần nhất (updatedAt), xử lý null
+        Collections.sort(taskList, (t1, t2) -> {
+            if (t1.getUpdatedAt() == null && t2.getUpdatedAt() == null) return 0;
+            if (t1.getUpdatedAt() == null) return 1;
+            if (t2.getUpdatedAt() == null) return -1;
+            return t2.getUpdatedAt().compareTo(t1.getUpdatedAt());
+        });
+
+        // Hiển thị dự án gần nhất ở listRecent với layout item_task_recent
+        if (!taskList.isEmpty()) {
+            Task recentTask = taskList.get(0);
+            View recentView = inflater.inflate(R.layout.item_task_recent, listRecent, false);
+            LinearLayout infoLayout = recentView.findViewById(R.id.infoLayout);
+            ImageView icDropdown = recentView.findViewById(R.id.ic_dropdown);
+
+            if (infoLayout != null && infoLayout.getChildCount() >= 2) {
+                TextView tvName = (TextView) infoLayout.getChildAt(0);
+                TextView tvStatus = (TextView) infoLayout.getChildAt(1);
+                if (tvName != null) tvName.setText(recentTask.getName());
+                if (tvStatus != null) tvStatus.setText(recentTask.getStatus());
             }
-        } else if (sortType == SortType.DATE) {
-            if (isSortAZ) {
-                Collections.sort(taskList, Comparator.comparing(t -> t.getDateCompleted()));
-            } else {
-                Collections.sort(taskList, Comparator.comparing((Task t) -> t.getDateCompleted()).reversed());
-            }
-        }
-        for (Task task : taskList) {
-            int dayLeft = task.dayLeft();
-            LinearLayout parentLayout;
-            int layoutId;
-            if (dayLeft > 5) {
-                parentLayout = listRecent;
-                layoutId = R.layout.item_task_recent;
-            } else {
-                parentLayout = listOld;
-                layoutId = R.layout.item_task_old;
-            }
-            // Inflate card
-            android.view.View card = getLayoutInflater().inflate(layoutId, parentLayout, false);
-            // Set data
-            LinearLayout infoLayout = card.findViewById(R.id.infoLayout);
-            TextView tvName = infoLayout != null ? (TextView) infoLayout.getChildAt(0) : null;
-            TextView tvStatus = infoLayout != null ? (TextView) infoLayout.getChildAt(1) : null;
-            if (tvName != null) tvName.setText(task.getName() + " (" + task.getGroup() + ")");
-            if (tvStatus != null) tvStatus.setText(task.getStatus());
-            // Xử lý nút expand (ic_dropdown) để hiển thị mô tả và ngày
-            android.widget.ImageView btnExpand = card.findViewById(R.id.ic_dropdown);
-            if (btnExpand != null) {
-                btnExpand.setOnClickListener(v -> {
-                    // Hiển thị dialog chi tiết project
-                    String msg = "Mô tả: " + task.getQuest() +
-                            "\nNhóm: " + task.getGroup() +
-                            "\nBắt đầu: " + task.getDateBegin() +
-                            "\nKết thúc: " + task.getDateCompleted() +
-                            "\n" + task.getStatus();
+
+            // Xử lý sự kiện click vào mũi tên dropdown
+            if (icDropdown != null) {
+                icDropdown.setOnClickListener(v -> {
+                    // Tạo AlertDialog với layout tùy chỉnh
                     android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-                    builder.setTitle(task.getName())
-                        .setMessage(msg)
-                        .setPositiveButton("Đóng", null)
-                        .setNegativeButton("Xóa", (dialog, which) -> {
-                            taskList.remove(task);
-                            renderTasks();
-                        })
-                        .setNeutralButton("Sửa", (dialog, which) -> {
-                            android.content.Intent intent = new android.content.Intent(this, EditProjectActivity.class);
-                            // Truyền dữ liệu project qua intent
-                            intent.putExtra("name", task.getName());
-                            intent.putExtra("desc", task.getQuest());
-                            intent.putExtra("group", task.getGroup());
-                            intent.putExtra("start", task.getDateBegin());
-                            intent.putExtra("end", task.getDateCompleted());
-                            intent.putExtra("status", task.getStatus());
-                            intent.putExtra("position", taskList.indexOf(task));
-                            startActivityForResult(intent, 1001);
-                        })
-                        .show();
+                    builder.setTitle(recentTask.getName());
+
+                    // Hiển thị mô tả của dự án
+                    builder.setMessage(recentTask.getQuest());
+
+                    // Thêm các nút tùy chọn
+                    builder.setPositiveButton("Chỉnh sửa", (dialog, which) -> {
+                        // Mở EditProjectActivity để chỉnh sửa
+                        android.content.Intent intent = new android.content.Intent(this, EditProjectActivity.class);
+                        intent.putExtra("name", recentTask.getName());
+                        intent.putExtra("desc", recentTask.getQuest());
+                        intent.putExtra("group", recentTask.getGroup());
+                        intent.putExtra("start", recentTask.getDateBegin());
+                        intent.putExtra("end", recentTask.getDateCompleted());
+                        intent.putExtra("position", 0);
+                        startActivity(intent);
+                    });
+
+                    builder.setNegativeButton("Xóa", (dialog, which) -> {
+                        // Xác nhận xóa
+                        new android.app.AlertDialog.Builder(this)
+                            .setTitle("Xác nhận xóa")
+                            .setMessage("Bạn có chắc chắn muốn xóa dự án này không?")
+                            .setPositiveButton("Xóa", (d, w) -> {
+                                MainActivity.taskList.remove(0);
+                                TaskStorage.saveTasks(this, MainActivity.taskList);
+                                renderTasks();
+                                Toast.makeText(this, "Đã xóa dự án", Toast.LENGTH_SHORT).show();
+                            })
+                            .setNegativeButton("Hủy", null)
+                            .show();
+                    });
+
+                    builder.show();
                 });
             }
-            parentLayout.addView(card);
+
+            listRecent.addView(recentView);
+        }
+
+        // Hiển thị các dự án còn lại ở listOld với layout item_task_old
+        for (int i = 1; i < taskList.size(); i++) {
+            Task task = taskList.get(i);
+            View oldView = inflater.inflate(R.layout.item_task_old, listOld, false);
+            LinearLayout infoLayout = oldView.findViewById(R.id.infoLayout);
+            ImageView icDropdown = oldView.findViewById(R.id.ic_dropdown);
+
+            if (infoLayout != null && infoLayout.getChildCount() >= 2) {
+                TextView tvName = (TextView) infoLayout.getChildAt(0);
+                TextView tvStatus = (TextView) infoLayout.getChildAt(1);
+                if (tvName != null) tvName.setText(task.getName());
+                if (tvStatus != null) tvStatus.setText(task.getStatus());
+            }
+
+            // Xử lý sự kiện click vào mũi tên dropdown cho các dự án cũ
+            if (icDropdown != null) {
+                final int position = i;
+                icDropdown.setOnClickListener(v -> {
+                    // Tạo AlertDialog với layout tùy chỉnh
+                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                    builder.setTitle(task.getName());
+
+                    // Hiển thị mô tả của dự án
+                    builder.setMessage(task.getQuest());
+
+                    // Thêm các nút tùy chọn
+                    builder.setPositiveButton("Chỉnh sửa", (dialog, which) -> {
+                        // Mở EditProjectActivity để chỉnh sửa
+                        android.content.Intent intent = new android.content.Intent(this, EditProjectActivity.class);
+                        intent.putExtra("name", task.getName());
+                        intent.putExtra("desc", task.getQuest());
+                        intent.putExtra("group", task.getGroup());
+                        intent.putExtra("start", task.getDateBegin());
+                        intent.putExtra("end", task.getDateCompleted());
+                        intent.putExtra("position", position);
+                        startActivity(intent);
+                    });
+
+                    builder.setNegativeButton("Xóa", (dialog, which) -> {
+                        // Xác nhận xóa
+                        new android.app.AlertDialog.Builder(this)
+                            .setTitle("Xác nhận xóa")
+                            .setMessage("Bạn có chắc chắn muốn xóa dự án này không?")
+                            .setPositiveButton("Xóa", (d, w) -> {
+                                MainActivity.taskList.remove(position);
+                                TaskStorage.saveTasks(this, MainActivity.taskList);
+                                renderTasks();
+                                Toast.makeText(this, "Đã xóa dự án", Toast.LENGTH_SHORT).show();
+                            })
+                            .setNegativeButton("Hủy", null)
+                            .show();
+                    });
+
+                    builder.show();
+                });
+            }
+
+            listOld.addView(oldView);
         }
     }
 }
