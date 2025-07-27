@@ -20,7 +20,7 @@ public class addProjectActivity extends AppCompatActivity {
     private CardView cardStarDate, cardEndDate;
     private TextView tvTaskGroup, tvStarDate, tvEndDate;
     private EditText etProjectName, etDescription;
-    private Button btnAddProject;
+    private ImageButton btnAddProject;
     private ImageButton btnBack, btnNoti;
 
     // Biến lưu trữ ngày bắt đầu và ngày kết thúc

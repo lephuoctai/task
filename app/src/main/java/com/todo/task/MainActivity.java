@@ -7,9 +7,6 @@ import android.widget.*;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.todo.task.SignInUp.SignIn;
@@ -42,20 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
             // Chuyển hướng đến welcome_screen
             Intent intent = new Intent(this, WelcomeScreen.class);
-            // Truyền tên người dùng vào intent
-            String userName = User.getInstance().getName();
-            intent.putExtra("userName", userName);
-
             startActivity(intent);
+            finish(); // Kết thúc activity này để không quay lại truy cập login
         }
 
-
         // Chuyển hướng đến sign_in khi nhấn nút "Bắt đầu"
-        Button startBtn = findViewById(R.id.button2);
+        ImageButton startBtn = findViewById(R.id.button2);
         if (startBtn != null) {
             startBtn.setOnClickListener(v -> {
                 Intent intent = new Intent(MainActivity.this, SignIn.class);
                 startActivity(intent);
+                finish();
             });
         }
     }

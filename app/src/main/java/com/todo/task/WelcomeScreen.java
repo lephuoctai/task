@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.todo.task.user.User;
+
 
 public class WelcomeScreen extends AppCompatActivity {
     private TextView welcomeText;
@@ -22,23 +24,17 @@ public class WelcomeScreen extends AppCompatActivity {
 
         welcomeText = findViewById(R.id.welcome_text);
         btn_next = findViewById(R.id.btn_bg);
-
-        Intent intent = getIntent();
-        String userName = "";
-        try {
-            userName = intent.getStringExtra("userName");
-        } catch (Exception e) {
-            Log.e("TM", "-WelcomeScreen: Lỗi khi nhận tên người dùng từ intent", e);
-        }
+        User user = User.getInstance();
 
         // Gán tên người dùng vào màn hình chào mừng
-        String welcomePerson = userName + "," + welcomeText.getText().toString();
+        String welcomePerson = user.getName() + "," + welcomeText.getText().toString();
         welcomeText.setText(welcomePerson);
 
         // Chuyển màng hình tới workspace
         btn_next.setOnClickListener(v -> {
             startActivity(new Intent(this, ProjectListActivity.class));
             Log.d("TM", "-WelcomeScreen: Chuyển sang projectList");
+            finish();
         });
     }
 }

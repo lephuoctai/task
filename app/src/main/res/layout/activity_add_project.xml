@@ -366,22 +366,33 @@
     </androidx.cardview.widget.CardView>
 
     <!-- Add Project Button -->
-    <Button
+
+    <ImageButton
         android:id="@+id/btnAddProject"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="128dp"
-        android:backgroundTint="#7450F7"
-        android:text="Thêm Dự Án"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Thêm mới"
+        android:fontFamily="sans-serif"
+        android:textSize="20dp"
+        android:textFontWeight="600"
+        android:textAlignment="center"
+        android:textColor="@color/light"
+
+        app:layout_constraintTop_toTopOf="@id/btnAddProject"
+        app:layout_constraintStart_toStartOf="@id/btnAddProject"
+        app:layout_constraintEnd_toEndOf="@id/btnAddProject"
+        app:layout_constraintBottom_toBottomOf="@id/btnAddProject"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
