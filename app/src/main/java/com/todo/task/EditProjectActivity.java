@@ -18,7 +18,7 @@ public class EditProjectActivity extends AppCompatActivity {
         TextView tvStarDate = findViewById(R.id.tvStarDate);
         TextView tvEndDate = findViewById(R.id.tvEndDate);
         ImageView igIcDropdown = findViewById(R.id.ig_ic_dropdown);
-        Button btnAddProject = findViewById(R.id.btnAddProject);
+        ImageButton btnAddProject = findViewById(R.id.btnAddProject);
         ImageButton btnBack = findViewById(R.id.btnBack);
         ImageButton btnNoti = findViewById(R.id.btnNoti);
         String[] taskGroups = {"Công việc", "Cá nhân", "Học tập", "Khác"};

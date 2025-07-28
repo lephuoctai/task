@@ -23,12 +23,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/btnBack"
+            android:id="@+id/logout"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="?selectableItemBackgroundBorderless"
             android:src="@drawable/ic_arrow_back"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/logout_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng xuất"
+            android:textColor="#222222"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -36,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Danh sách dự án"
+            android:text=""
             android:textColor="#222222"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -173,24 +182,44 @@
     </LinearLayout>
 
     <!-- New Task Button -->
-    <Button
-        android:id="@+id/btnNewTask"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="60dp"
-        android:backgroundTint="#7467F0"
-        android:text="Dự Án Mới"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:drawableLeft="@drawable/ic_add"
-        android:gravity="center"
-        android:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-70dp"
 
+        android:src="@drawable/shadow_btn"
+        app:layout_constraintBottom_toBottomOf="@id/btnNewTask"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageButton
+        android:id="@+id/btnNewTask"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Thêm mới"
+        android:fontFamily="sans-serif"
+        android:textSize="20dp"
+        android:textFontWeight="600"
+        android:textAlignment="center"
+        android:textColor="@color/light"
+
+        app:layout_constraintTop_toTopOf="@id/btnNewTask"
+        app:layout_constraintStart_toStartOf="@id/btnNewTask"
+        app:layout_constraintEnd_toEndOf="@id/btnNewTask"
+        app:layout_constraintBottom_toBottomOf="@id/btnNewTask"
+        />
     <LinearLayout
         android:id="@+id/task_list"
         android:layout_width="0dp"
