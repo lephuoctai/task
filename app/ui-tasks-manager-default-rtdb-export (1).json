@@ -1,0 +1,15 @@
+{
+  "users": {
+    " userId": {
+      "tasks": {
+        " taskId1:": {
+          "dateBegin": "",
+          "dateCompleted": "",
+          "group": "",
+          "name": "",
+          "quest": ""
+        }
+      }
+    }
+  }
+}
