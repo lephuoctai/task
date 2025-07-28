@@ -1,6 +1,7 @@
 package com.todo.task;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.todo.task.user.User;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -28,7 +32,11 @@ public class ProjectListActivity extends AppCompatActivity {
         tvSortType = findViewById(R.id.tvSortType);
 
         // Nút quay lại
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
+        findViewById(R.id.logout).setOnClickListener(v -> {
+            User.logout(this);
+            Log.d("TM", "--User logged out");
+            finish();
+        });
 
         // Nút thông báo: Hiển thị tên các project còn dưới 3 ngày
         findViewById(R.id.btnNoti).setOnClickListener(v -> {
@@ -81,7 +89,7 @@ public class ProjectListActivity extends AppCompatActivity {
                         renderTasks();
                     })
                     .show();
-            });
+        });
         }
 
         // Nút dropdown ở phần sort: ví dụ hiển thị menu chọn kiểu sort
@@ -145,6 +153,7 @@ public class ProjectListActivity extends AppCompatActivity {
         listOld.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(this);
 
+        // Hiển thị dự án gần nhất nhất (theo thời gian cập nhật) ở listRecent
         // Sắp xếp theo thời gian chỉnh sửa gần nhất (updatedAt), xử lý null
         Collections.sort(taskList, (t1, t2) -> {
             if (t1.getUpdatedAt() == null && t2.getUpdatedAt() == null) return 0;
@@ -167,54 +176,83 @@ public class ProjectListActivity extends AppCompatActivity {
                 if (tvStatus != null) tvStatus.setText(recentTask.getStatus());
             }
 
-            // Xử lý sự kiện click vào mũi tên dropdown
-            if (icDropdown != null) {
-                icDropdown.setOnClickListener(v -> {
-                    // Tạo AlertDialog với layout tùy chỉnh
-                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-                    builder.setTitle(recentTask.getName());
+            // Tạo listener cho việc hiển thị popup
+            View.OnClickListener openPopupListener = v -> {
+                // Tạo AlertDialog với layout tùy chỉnh
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                builder.setTitle(recentTask.getName());
 
-                    // Hiển thị mô tả của dự án
-                    builder.setMessage(recentTask.getQuest());
+                // Hiển thị mô tả của dự án
+                builder.setMessage(recentTask.getQuest());
 
-                    // Thêm các nút tùy chọn
-                    builder.setPositiveButton("Chỉnh sửa", (dialog, which) -> {
-                        // Mở EditProjectActivity để chỉnh sửa
-                        android.content.Intent intent = new android.content.Intent(this, EditProjectActivity.class);
-                        intent.putExtra("name", recentTask.getName());
-                        intent.putExtra("desc", recentTask.getQuest());
-                        intent.putExtra("group", recentTask.getGroup());
-                        intent.putExtra("start", recentTask.getDateBegin());
-                        intent.putExtra("end", recentTask.getDateCompleted());
-                        intent.putExtra("position", 0);
-                        startActivity(intent);
-                    });
-
-                    builder.setNegativeButton("Xóa", (dialog, which) -> {
-                        // Xác nhận xóa
-                        new android.app.AlertDialog.Builder(this)
-                            .setTitle("Xác nhận xóa")
-                            .setMessage("Bạn có chắc chắn muốn xóa dự án này không?")
-                            .setPositiveButton("Xóa", (d, w) -> {
-                                MainActivity.taskList.remove(0);
-                                TaskStorage.saveTasks(this, MainActivity.taskList);
-                                renderTasks();
-                                Toast.makeText(this, "Đã xóa dự án", Toast.LENGTH_SHORT).show();
-                            })
-                            .setNegativeButton("Hủy", null)
-                            .show();
-                    });
-
-                    builder.show();
+                // Thêm các nút tùy chọn
+                builder.setPositiveButton("Chỉnh sửa", (dialog, which) -> {
+                    // Mở EditProjectActivity để chỉnh sửa
+                    android.content.Intent intent = new android.content.Intent(this, EditProjectActivity.class);
+                    intent.putExtra("name", recentTask.getName());
+                    intent.putExtra("desc", recentTask.getQuest());
+                    intent.putExtra("group", recentTask.getGroup());
+                    intent.putExtra("start", recentTask.getDateBegin());
+                    intent.putExtra("end", recentTask.getDateCompleted());
+                    intent.putExtra("position", 0);
+                    startActivity(intent);
                 });
+
+                builder.setNegativeButton("Xóa", (dialog, which) -> {
+                    // Xác nhận xóa
+                    new android.app.AlertDialog.Builder(this)
+                        .setTitle("Xác nhận xóa")
+                        .setMessage("Bạn có chắc chắn muốn xóa dự án này không?")
+                        .setPositiveButton("Xóa", (d, w) -> {
+                            MainActivity.taskList.remove(0);
+                            TaskStorage.saveTasks(this, MainActivity.taskList);
+                            renderTasks();
+                            Toast.makeText(this, "Đã xóa dự án", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("Hủy", null)
+                        .show();
+                });
+
+                builder.show();
+            };
+
+            // Gán sự kiện click cho cả item và nút dropdown
+            if (icDropdown != null) {
+                icDropdown.setOnClickListener(openPopupListener);
             }
+            // Thêm sự kiện click cho toàn bộ view
+            recentView.setOnClickListener(openPopupListener);
 
             listRecent.addView(recentView);
         }
 
-        // Hiển thị các dự án còn lại ở listOld với layout item_task_old
+        // Tạo danh sách riêng cho các dự án cũ để sắp xếp
+        ArrayList<Task> oldTasks = new ArrayList<>();
         for (int i = 1; i < taskList.size(); i++) {
-            Task task = taskList.get(i);
+            oldTasks.add(taskList.get(i));
+        }
+
+        // Sắp xếp danh sách dự án cũ theo tiêu chí đã chọn
+        if (sortType == SortType.NAME) {
+            // Sắp xếp theo tên
+            Collections.sort(oldTasks, (t1, t2) -> {
+                int result = t1.getName().compareToIgnoreCase(t2.getName());
+                return isSortAZ ? result : -result;
+            });
+        } else {
+            // Sắp xếp theo ngày hoàn thành
+            Collections.sort(oldTasks, (t1, t2) -> {
+                if (t1.getDateCompleted() == null && t2.getDateCompleted() == null) return 0;
+                if (t1.getDateCompleted() == null) return 1;
+                if (t2.getDateCompleted() == null) return -1;
+                int result = t1.getDateCompleted().compareTo(t2.getDateCompleted());
+                return isSortAZ ? result : -result;
+            });
+        }
+
+        // Hiển thị các dự án cũ đã sắp xếp ở listOld với layout item_task_old
+        for (int i = 0; i < oldTasks.size(); i++) {
+            Task task = oldTasks.get(i);
             View oldView = inflater.inflate(R.layout.item_task_old, listOld, false);
             LinearLayout infoLayout = oldView.findViewById(R.id.infoLayout);
             ImageView icDropdown = oldView.findViewById(R.id.ic_dropdown);
@@ -226,48 +264,55 @@ public class ProjectListActivity extends AppCompatActivity {
                 if (tvStatus != null) tvStatus.setText(task.getStatus());
             }
 
-            // Xử lý sự kiện click vào mũi tên dropdown cho các dự án cũ
-            if (icDropdown != null) {
-                final int position = i;
-                icDropdown.setOnClickListener(v -> {
-                    // Tạo AlertDialog với layout tùy chỉnh
-                    android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-                    builder.setTitle(task.getName());
+            // Tìm vị trí thực của task trong taskList chính
+            final int taskIndex = MainActivity.taskList.indexOf(task);
 
-                    // Hiển thị mô tả của dự án
-                    builder.setMessage(task.getQuest());
+            // Tạo listener cho việc hiển thị popup
+            View.OnClickListener openPopupListener = v -> {
+                // Tạo AlertDialog với layout tùy chỉnh
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                builder.setTitle(task.getName());
 
-                    // Thêm các nút tùy chọn
-                    builder.setPositiveButton("Chỉnh sửa", (dialog, which) -> {
-                        // Mở EditProjectActivity để chỉnh sửa
-                        android.content.Intent intent = new android.content.Intent(this, EditProjectActivity.class);
-                        intent.putExtra("name", task.getName());
-                        intent.putExtra("desc", task.getQuest());
-                        intent.putExtra("group", task.getGroup());
-                        intent.putExtra("start", task.getDateBegin());
-                        intent.putExtra("end", task.getDateCompleted());
-                        intent.putExtra("position", position);
-                        startActivity(intent);
-                    });
+                // Hiển thị mô tả của dự án
+                builder.setMessage(task.getQuest());
 
-                    builder.setNegativeButton("Xóa", (dialog, which) -> {
-                        // Xác nhận xóa
-                        new android.app.AlertDialog.Builder(this)
-                            .setTitle("Xác nhận xóa")
-                            .setMessage("Bạn có chắc chắn muốn xóa dự án này không?")
-                            .setPositiveButton("Xóa", (d, w) -> {
-                                MainActivity.taskList.remove(position);
-                                TaskStorage.saveTasks(this, MainActivity.taskList);
-                                renderTasks();
-                                Toast.makeText(this, "Đã xóa dự án", Toast.LENGTH_SHORT).show();
-                            })
-                            .setNegativeButton("Hủy", null)
-                            .show();
-                    });
-
-                    builder.show();
+                // Thêm các nút tùy chọn
+                builder.setPositiveButton("Chỉnh sửa", (dialog, which) -> {
+                    // Mở EditProjectActivity để chỉnh sửa
+                    android.content.Intent intent = new android.content.Intent(this, EditProjectActivity.class);
+                    intent.putExtra("name", task.getName());
+                    intent.putExtra("desc", task.getQuest());
+                    intent.putExtra("group", task.getGroup());
+                    intent.putExtra("start", task.getDateBegin());
+                    intent.putExtra("end", task.getDateCompleted());
+                    intent.putExtra("position", taskIndex);
+                    startActivity(intent);
                 });
+
+                builder.setNegativeButton("Xóa", (dialog, which) -> {
+                    // Xác nhận xóa
+                    new android.app.AlertDialog.Builder(this)
+                        .setTitle("Xác nhận xóa")
+                        .setMessage("Bạn có chắc chắn muốn xóa dự án này không?")
+                        .setPositiveButton("Xóa", (d, w) -> {
+                            MainActivity.taskList.remove(taskIndex);
+                            TaskStorage.saveTasks(this, MainActivity.taskList);
+                            renderTasks();
+                            Toast.makeText(this, "Đã xóa dự án", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("Hủy", null)
+                        .show();
+                });
+
+                builder.show();
+            };
+
+            // Gán sự kiện click cho cả item và nút dropdown
+            if (icDropdown != null) {
+                icDropdown.setOnClickListener(openPopupListener);
             }
+            // Thêm sự kiện click cho toàn bộ view
+            oldView.setOnClickListener(openPopupListener);
 
             listOld.addView(oldView);
         }

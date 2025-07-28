@@ -25,9 +25,6 @@
             android:name=".projectList"
             android:exported="false" />
         <activity
-            android:name=".addNote"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
