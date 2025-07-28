@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.todo.task.user.User;
+import com.todo.task.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +40,7 @@ public class ProjectListActivity extends AppCompatActivity {
 
         // Nút logout
         findViewById(R.id.logout).setOnClickListener(v -> {
-            User.logout(this);
+            User.getInstance().logout(this);
             Log.d("TM", "--User logged out");
             finish();
         });

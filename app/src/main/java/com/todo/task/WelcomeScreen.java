@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import com.todo.task.User;
 
-import com.todo.task.user.User;
 
 
 public class WelcomeScreen extends AppCompatActivity {

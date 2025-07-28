@@ -1,6 +1,6 @@
 package com.todo.task;
 
-import com.todo.task.user.User;
+import com.todo.task.User;
 
 // Trả về kết quả đăng nhập
 public interface SendCallback {

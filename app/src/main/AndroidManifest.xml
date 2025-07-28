@@ -15,12 +15,12 @@
         <activity
             android:name=".WelcomeScreen"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".SignInUp.SignUp"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".SignInUp.SignIn"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".SignInUp.SignUp"
+            android:exported="false" />
+        <activity
+            android:name=".SignInUp.SignIn"
+            android:exported="false" />
         <activity
             android:name=".projectList"
             android:exported="false" />
