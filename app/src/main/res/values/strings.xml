@@ -40,4 +40,6 @@
 
     <string name="dang_nhap">Đăng Nhập</string>
     <string name="dang_ky">Đăng Ký</string>
+    <string name="gui_xac_nhan">Gửi xác nhận</string>
+    <string name="btn_dang_ky">Đăng ký tài khoản ngay</string>
 </resources>

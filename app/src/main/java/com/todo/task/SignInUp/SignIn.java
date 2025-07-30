@@ -13,10 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.todo.task.R;
 import com.todo.task.WelcomeScreen;
 import com.todo.task.SendCallback;
+import com.todo.task.ResetPassword;
 import com.todo.task.user.User;
 
 public class SignIn extends AppCompatActivity {
     private Button registerBtn;
+    private Button resetPasswordBtn;
     private ImageButton loginBtn;
     private EditText inputName, inputPassword;
 
@@ -31,9 +33,15 @@ public class SignIn extends AppCompatActivity {
         inputPassword = findViewById(R.id.password);
         registerBtn = findViewById(R.id.register_btn);
         loginBtn = findViewById(R.id.btn_signIn);
+        resetPasswordBtn = findViewById(R.id.register_btn);
 
 // Chuyển sang màn hình đăng ký
         registerBtn.setOnClickListener(v -> startActivity(intent));
+// Chuyển sang
+        resetPasswordBtn.setOnClickListener(v -> {
+            Intent resetIntent = new Intent(SignIn.this, ResetPassword.class);
+            startActivity(resetIntent);
+        });
 
 // Xử lý đăng nhập với email/password
         loginBtn.setOnClickListener(v -> {

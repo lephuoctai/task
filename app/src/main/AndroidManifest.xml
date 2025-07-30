@@ -11,10 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Task"
-        tools:targetApi="31">
-        <activity
-            android:name=".reset_password"
-            android:exported="false" />
+        tools:targetApi="31"
+        android:name=".Application"
+        tools:ignore="MissingClass">
         <activity
             android:name=".WelcomeScreen"
             android:exported="false" />
@@ -40,5 +39,7 @@
         <activity android:name=".ProjectListActivity" />
         <activity android:name=".EditProjectActivity" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 
 </manifest>

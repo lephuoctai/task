@@ -2,9 +2,13 @@ package com.todo.task;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,31 +17,23 @@ import java.util.Calendar;
 
 public class addProjectActivity extends AppCompatActivity {
 
-    // Danh sách Task được chia sẻ từ MainActivity (dùng chung)
     ArrayList<Task> list = MainActivity.taskList;
 
-    // Khai báo các thành phần giao diện
     private CardView cardStarDate, cardEndDate;
     private TextView tvTaskGroup, tvStarDate, tvEndDate;
     private EditText etProjectName, etDescription;
     private ImageButton btnAddProject;
     private ImageButton btnBack, btnNoti;
 
-    // Biến lưu trữ ngày bắt đầu và ngày kết thúc
     private String startDate = "", endDate = "";
     private String selectedTaskGroup = "Công việc";
     private String[] taskGroups = {"Công việc", "Cá nhân", "Học tâp", "Khác"};
 
-    /**
-     * Hàm onCreate được gọi khi activity được khởi tạo
-     * → Thiết lập giao diện, ánh xạ view và gán các sự kiện
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
 
-        // Ánh xạ ID các view từ layout
         cardStarDate = findViewById(R.id.cardStarDate);
         cardEndDate = findViewById(R.id.cardEndDate);
         btnBack = findViewById(R.id.btnBack);
@@ -50,59 +46,50 @@ public class addProjectActivity extends AppCompatActivity {
         btnAddProject = findViewById(R.id.btnAddProject);
         ImageView igIcDropdown = findViewById(R.id.ig_ic_dropdown);
 
-        // Sự kiện nút "Quay lại"
         btnBack.setOnClickListener(v -> finish());
 
-        // Sự kiện khi nhấn vào biểu tượng thông báo
         btnNoti.setOnClickListener(v -> {
             if (list.isEmpty()) {
                 Toast.makeText(this, "Chưa có dự án nào được thêm!", Toast.LENGTH_SHORT).show();
             } else {
                 StringBuilder sb = new StringBuilder();
                 for (Task t : list) {
-                    sb.append("- ").append(t.getName()).append(" (" + t.getGroup() + ")\n");
+                    sb.append("- ").append(t.getName()).append(" (").append(t.getGroup()).append(")\n");
                 }
                 new android.app.AlertDialog.Builder(this)
-                    .setTitle("Danh sách dự án đã thêm")
-                    .setMessage(sb.toString())
-                    .setPositiveButton("Đóng", null)
-                    .show();
+                        .setTitle("Danh sách dự án đã thêm")
+                        .setMessage(sb.toString())
+                        .setPositiveButton("Đóng", null)
+                        .show();
             }
         });
 
-        // Sự kiện khi chọn nhóm công việc
-        tvTaskGroup.setOnClickListener(v -> {
-            new android.app.AlertDialog.Builder(this)
+        tvTaskGroup.setOnClickListener(v -> showTaskGroupDialog());
+        if (igIcDropdown != null) {
+            igIcDropdown.setOnClickListener(v -> showTaskGroupDialog());
+        }
+
+        cardStarDate.setOnClickListener(v -> showDatePicker(tvStarDate));
+        cardEndDate.setOnClickListener(v -> showDatePicker(tvEndDate));
+
+        // --- Fix: Chỉ đăng ký 1 lần onClickListener duy nhất ---
+        btnAddProject.setOnClickListener(v -> {
+            Log.d("addProjectActivity", "Nút thêm mới đã được bấm");
+            Toast.makeText(this, "Đã bấm nút thêm mới", Toast.LENGTH_SHORT).show();
+            addProject();
+        });
+    }
+
+    private void showTaskGroupDialog() {
+        new android.app.AlertDialog.Builder(this)
                 .setTitle("Chọn nhóm công việc")
                 .setItems(taskGroups, (dialog, which) -> {
                     selectedTaskGroup = taskGroups[which];
                     tvTaskGroup.setText(selectedTaskGroup);
                 })
                 .show();
-        });
-        if (igIcDropdown != null) {
-            igIcDropdown.setOnClickListener(v -> {
-                new android.app.AlertDialog.Builder(this)
-                    .setTitle("Chọn nhóm công việc")
-                    .setItems(taskGroups, (dialog, which) -> {
-                        selectedTaskGroup = taskGroups[which];
-                        tvTaskGroup.setText(selectedTaskGroup);
-                    })
-                    .show();
-            });
-        }
-
-        // Hiển thị DatePicker để chọn ngày bắt đầu và kết thúc
-        cardStarDate.setOnClickListener(v -> showDatePicker(tvStarDate));
-        cardEndDate.setOnClickListener(v -> showDatePicker(tvEndDate));
-
-        // Sự kiện khi nhấn nút "Thêm dự án"
-        btnAddProject.setOnClickListener(v -> addProject());
     }
 
-    /**
-     * Hiển thị DatePicker và gán ngày được chọn vào TextView tương ứng
-     */
     private void showDatePicker(TextView target) {
         Calendar calendar = Calendar.getInstance();
         int y = calendar.get(Calendar.YEAR);
@@ -113,16 +100,12 @@ public class addProjectActivity extends AppCompatActivity {
             String dateStr = String.format("00:00 %02d-%02d-%d", dayOfMonth, month + 1, year);
             target.setText(dateStr);
 
-            // Gán vào biến ngày tương ứng
             if (target.getId() == R.id.tvStarDate) startDate = dateStr;
             else if (target.getId() == R.id.tvEndDate) endDate = dateStr;
 
         }, y, m, d).show();
     }
 
-    /**
-     * Kiểm tra đầu vào và thêm công việc mới vào danh sách nếu hợp lệ
-     */
     private void addProject() {
         String name = etProjectName.getText().toString().trim();
         String desc = etDescription.getText().toString().trim();
@@ -130,29 +113,28 @@ public class addProjectActivity extends AppCompatActivity {
 
         if (name.isEmpty()) {
             etProjectName.setError("Tên Công việc không được trống!");
-        } else if (startDate.isEmpty() || endDate.isEmpty()) {
-            Toast.makeText(this, "Vui lòng điền thông tin đầy đủ!", Toast.LENGTH_SHORT).show();
-        } else if (!isDateValid(startDate, endDate)) {
-            Toast.makeText(this, "Ngày hoàn thành không hợp lệ!", Toast.LENGTH_SHORT).show();
-        } else {
-            // Thông báo thông tin đã nhập
-            String info = "Công việc đã thêm:\nTên: " + name + "\nMô tả: " + desc +
-                    "\nTừ ngày: " + startDate + "\nĐến ngày: " + endDate;
-            Toast.makeText(this, info, Toast.LENGTH_LONG).show();
-
-            // Tạo task mới và thêm vào danh sách chung
-            Task task = new Task(name, desc, startDate, endDate, group);
-            list.add(task);
-
-            // Sau khi thêm task mới vào list
-            TaskStorage.saveTasks(this, list);
-            finish();
+            return;
         }
+        if (startDate.isEmpty() || endDate.isEmpty()) {
+            Toast.makeText(this, "Vui lòng điền thông tin đầy đủ!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!isDateValid(startDate, endDate)) {
+            Toast.makeText(this, "Ngày hoàn thành không hợp lệ!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String info = "Công việc đã thêm:\nTên: " + name + "\nMô tả: " + desc +
+                "\nTừ ngày: " + startDate + "\nĐến ngày: " + endDate;
+        Toast.makeText(this, info, Toast.LENGTH_LONG).show();
+
+        // Tạo Task object
+        Task task = new Task(name, desc, startDate, endDate, group);
+
+        // Lưu lên Firebase, sau khi thành công mới cập nhật local và đóng Activity
+        addProjectToDB(task);
     }
 
-    /**
-     * Kiểm tra tính hợp lệ của ngày
-     */
     private boolean isDateValid(String begin, String end) {
         LocalDateTime now = LocalDateTime.now();
         if (parseDateTime(begin).isBefore(now)) return false;
@@ -160,11 +142,33 @@ public class addProjectActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Chuyển chuỗi ngày theo định dạng "HH:mm dd-MM-yyyy" thành đối tượng LocalDateTime
-     */
     private LocalDateTime parseDateTime(String dateStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
         return LocalDateTime.parse(dateStr, formatter);
+    }
+
+///
+///     HAM LƯU LÊN FB O ĐÂY !!!!!!!!!!!!!
+///
+    private void addProjectToDB(Task task) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("tasks");
+        String taskId = database.push().getKey();
+
+        if (taskId == null) {
+            Toast.makeText(this, "Lỗi tạo ID cho task", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        database.child(taskId).setValue(task)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this, "Lưu dữ liệu lên Firebase thành công!", Toast.LENGTH_SHORT).show();
+                    // Cập nhật danh sách local và đóng activity
+                    list.add(task);
+                    TaskStorage.saveTasks(this, list);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi lưu Firebase: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 }

@@ -6,32 +6,95 @@ import java.time.format.DateTimeFormatter;
 public class Task {
     private String name;                  // Tên nhiệm vụ
     private String quest;                 // Nội dung hoặc mô tả nhiệm vụ
-    private LocalDateTime dateBegin;     // Ngày bắt đầu nhiệm vụ
-    private LocalDateTime dateCompleted; // Hạn chót hoàn thành nhiệm vụ
+    private String dateBegin;            // Ngày bắt đầu nhiệm vụ (String để lưu Firebase)
+    private String dateCompleted;        // Hạn chót hoàn thành nhiệm vụ (String để lưu Firebase)
     private String group;                // Nhóm nhiệm vụ
-    private LocalDateTime updatedAt; // Thời gian chỉnh sửa gần nhất
+    private String updatedAt;            // Thời gian chỉnh sửa gần nhất - lưu dạng String
 
-    // Constructor đầy đủ
-    public Task(String name, String quest, String dateBeginStr, String dateCompletedStr, String group) {
+    // Constructor mặc định bắt buộc cho Firebase
+    public Task() {
+    }
+
+    // Constructor đầy đủ - truyền vào String ngày tháng
+    public Task(String name, String quest, String dateBegin, String dateCompleted, String group) {
         this.name = name;
         this.quest = quest;
-        this.dateBegin = parseDateTime(dateBeginStr);
-        this.dateCompleted = parseDateTime(dateCompletedStr);
+        this.dateBegin = dateBegin;
+        this.dateCompleted = dateCompleted;
         this.group = group;
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = getCurrentTimeString();
     }
 
-    // Constructor chỉ có ngày hoàn thành
-    public Task(String name, String quest, String dateCompletedStr) {
+    // Constructor chỉ có ngày hoàn thành (khởi tạo ngày bắt đầu là hiện tại)
+    public Task(String name, String quest, String dateCompleted) {
         this.name = name;
         this.quest = quest;
-        this.dateBegin = LocalDateTime.now();
-        this.dateCompleted = parseDateTime(dateCompletedStr);
-        this.updatedAt = LocalDateTime.now();
+        this.dateBegin = getCurrentTimeString();
+        this.dateCompleted = dateCompleted;
+        this.group = "";
+        this.updatedAt = getCurrentTimeString();
     }
 
-    // Chuyển chuỗi định dạng "HH:mm dd-MM-yyyy" thành LocalDateTime
-    private LocalDateTime parseDateTime(String dateStr) {
+
+    // --- Getter và Setter ---
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        this.updatedAt = getCurrentTimeString();
+    }
+
+    public String getQuest() {
+        return quest;
+    }
+
+    public void setQuest(String quest) {
+        this.quest = quest;
+        this.updatedAt = getCurrentTimeString();
+    }
+
+    public String getDateBegin() {
+        return dateBegin != null ? dateBegin : "";
+    }
+
+    public void setDateBegin(String dateBegin) {
+        this.dateBegin = dateBegin;
+        this.updatedAt = getCurrentTimeString();
+    }
+
+    public String getDateCompleted() {
+        return dateCompleted != null ? dateCompleted : "";
+    }
+
+    public void setDateCompleted(String dateCompleted) {
+        this.dateCompleted = dateCompleted;
+        this.updatedAt = getCurrentTimeString();
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+        this.updatedAt = getCurrentTimeString();
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt != null ? updatedAt : "";
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    // --- Các phương thức hỗ trợ ---
+
+    // Chuyển String ngày giờ thành LocalDateTime
+    public static LocalDateTime parseDateTime(String dateStr) {
         if (dateStr == null || dateStr.trim().isEmpty()) {
             return null;
         }
@@ -39,124 +102,38 @@ public class Task {
         return LocalDateTime.parse(dateStr, formatter);
     }
 
-    // Getter tên nhiệm vụ
-    public String getName() {
-        return name;
+    // Lấy thời gian hiện tại dạng String theo định dạng "HH:mm dd-MM-yyyy"
+    private static String getCurrentTimeString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+        return LocalDateTime.now().format(formatter);
     }
 
-    // Getter nội dung
-    public String getQuest() {
-        return quest;
-    }
-
-    // Trả về ngày bắt đầu dưới dạng chuỗi
-    public String getDateBegin() {
-        return formatDateTime(dateBegin);
-    }
-
-    // Trả về ngày hoàn thành dưới dạng chuỗi
-    public String getDateCompleted() {
-        return formatDateTime(dateCompleted);
-    }
-
-    // Getter nhóm
-    public String getGroup() {
-        return group;
-    }
-
-    // Getter thời gian chỉnh sửa
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    // Setter tên
-    public void setName(String name) {
-        this.name = name;
-        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
-    }
-
-    // Setter nội dung
-    public void setQuest(String quest) {
-        this.quest = quest;
-        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
-    }
-
-    // Setter nhóm
-    public void setGroup(String group) {
-        this.group = group;
-        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
-    }
-
-    // Setter ngày bắt đầu
-    public void setDateBegin(String dateBeginStr) {
-        this.dateBegin = parseDateTime(dateBeginStr);
-        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
-    }
-
-    // Setter ngày hoàn thành
-    public void setDateCompleted(String dateCompletedStr) {
-        this.dateCompleted = parseDateTime(dateCompletedStr);
-        this.updatedAt = LocalDateTime.now(); // Cập nhật thời gian chỉnh sửa
-    }
-
-    // Cập nhật thông tin nhiệm vụ
-    public void updateTask(String name, String quest, String dateBeginStr, String dateCompletedStr, String group) {
-        this.name = name;
-        this.quest = quest;
-        this.dateBegin = parseDateTime(dateBeginStr);
-        this.dateCompleted = parseDateTime(dateCompletedStr);
-        this.group = group;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    // Tính số ngày còn lại
+    // Tính số ngày còn lại cho hạn chót hoàn thành
     public int dayLeft() {
-        if (dateCompleted == null) {
-            return Integer.MAX_VALUE; // hoặc -1 nếu muốn báo lỗi
-        }
-        try {
-            LocalDateTime now = LocalDateTime.now();
-            if (dateCompleted.toLocalDate() == null) return Integer.MAX_VALUE;
-            if (now.toLocalDate() == null) return Integer.MAX_VALUE;
-            return (int) java.time.Duration.between(now.toLocalDate().atStartOfDay(), dateCompleted.toLocalDate().atStartOfDay()).toDays();
-        } catch (Exception e) {
-            return Integer.MAX_VALUE;
-        }
-    }
+        LocalDateTime completed = parseDateTime(dateCompleted);
+        if (completed == null) return Integer.MAX_VALUE;
 
+        LocalDateTime now = LocalDateTime.now();
+
+        return (int) java.time.Duration.between(now.toLocalDate().atStartOfDay(), completed.toLocalDate().atStartOfDay()).toDays();
+    }
 
     // Trạng thái deadline
     public String getStatus() {
-        if (dateCompleted == null) {
+        LocalDateTime completed = parseDateTime(dateCompleted);
+        if (completed == null) {
             return "Trạng thái: Không xác định (thiếu ngày hoàn thành)";
         }
-
         int dayLeft = dayLeft();
-        String status = "Trạng thái: ";
-
-        if (dayLeft <= 0) {
-            status += "Quá hạn (vượt " + (-dayLeft) + " ngày)";
+        if (dayLeft < 0) {
+            return "Trạng thái: Quá hạn (vượt " + (-dayLeft) + " ngày)";
         } else {
-            status += "Còn hạn (" + dayLeft + " ngày còn lại)";
-        }
-
-        return status;
-    }
-
-    // Định dạng ngày thành chuỗi
-    private String formatDateTime(LocalDateTime dateTime) {
-        if (dateTime == null) return "Không xác định";
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
-            return dateTime.format(formatter);
-        } catch (Exception e) {
-            return "Không xác định";
+            return "Trạng thái: Còn hạn (" + dayLeft + " ngày còn lại)";
         }
     }
 
-    // Hiển thị thông tin Task
     @Override
     public String toString() {
-        return name + " | " + quest + " | " + getDateBegin() + " | " + getDateCompleted() + " | " + group;
+        return name + " | " + quest + " | " + dateBegin + " | " + dateCompleted + " | " + group;
     }
 }
