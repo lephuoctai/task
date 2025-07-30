@@ -27,6 +27,9 @@
             android:name=".projectList"
             android:exported="false" />
         <activity
+            android:name=".ResetPassword"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -35,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addProjectActivity" />
+        <activity android:name=".AddProjectActivity" />
         <activity android:name=".ProjectListActivity" />
         <activity android:name=".EditProjectActivity" />
     </application>

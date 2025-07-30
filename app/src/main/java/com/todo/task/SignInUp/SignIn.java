@@ -33,7 +33,7 @@ public class SignIn extends AppCompatActivity {
         inputPassword = findViewById(R.id.password);
         registerBtn = findViewById(R.id.register_btn);
         loginBtn = findViewById(R.id.btn_signIn);
-        resetPasswordBtn = findViewById(R.id.register_btn);
+        resetPasswordBtn = findViewById(R.id.resetpasswordbtn);
 
 // Chuyển sang màn hình đăng ký
         registerBtn.setOnClickListener(v -> startActivity(intent));

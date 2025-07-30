@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class addProjectActivity extends AppCompatActivity {
+public class AddProjectActivity extends AppCompatActivity {
 
     ArrayList<Task> list = MainActivity.taskList;
 

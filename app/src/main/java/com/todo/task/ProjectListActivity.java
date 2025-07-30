@@ -56,7 +56,7 @@ public class ProjectListActivity extends AppCompatActivity {
 
         // Nút thêm mới
         findViewById(R.id.btnNewTask).setOnClickListener(v ->
-            startActivity(new android.content.Intent(this, addProjectActivity.class))
+            startActivity(new android.content.Intent(this, AddProjectActivity.class))
         );
 
         // Sắp xếp khi nhấn vào icon sort
