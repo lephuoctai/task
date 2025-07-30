@@ -91,8 +91,10 @@ public final class User {
                if(task.isSuccessful()) {
                    instance.Update();
                    callBack.onLoginSuccess(User.this);
+                     Log.d("TM"," -Login: Đăng nhập thành công");
                } else {
                    callBack.onLoginFailure(task.getException().getMessage());
+                     Log.d("TM"," -Login: Đăng nhập thất bại: " + task.getException().getMessage());
                }
             });
         }

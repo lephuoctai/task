@@ -9,7 +9,6 @@
     android:paddingHorizontal="32dp"
     android:background="@drawable/background"
     >
-
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -145,34 +144,6 @@
         app:layout_constraintEnd_toEndOf="@id/btn_signUp"
         app:layout_constraintBottom_toBottomOf="@id/btn_signUp"
         />
-    <TextView
-        android:id="@+id/other_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-
-        android:text="Hình thức khác"
-        android:fontFamily="sans-serif"
-        android:textSize="16dp"
-        android:textFontWeight="400"
-        android:textAlignment="center"
-        android:textColor="@color/black25"
-
-        app:layout_constraintTop_toBottomOf="@id/btn_signUp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="16dp"
-
-        android:src="@drawable/icon_gg"
-
-        app:layout_constraintTop_toBottomOf="@id/other_login"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
 
     <TextView
         android:id="@+id/not_account_right"
@@ -191,7 +162,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/other_login"
+        app:layout_constraintTop_toBottomOf="@id/btn_signUp"
         app:layout_constraintVertical_bias="0.13" />
 
     <Button
