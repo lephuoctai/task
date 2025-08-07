@@ -1,24 +1,24 @@
-📋 Task List – Android To-Do App
+# 📋 Task List – Android To-Do App
 
-Ứng dụng Task List là một app Android đơn giản hỗ trợ người dùng tạo, quản lý, và chỉnh sửa thời hạn của các dự án. Được xây dựng bằng Java trên nền Android Studio, Task phù hợp với sinh viên, người đi làm hoặc bất kỳ ai cần một công cụ quản lý công việc cơ bản và hiệu quả.
+*Ứng dụng Task List là một app Android đơn giản hỗ trợ người dùng tạo, quản lý, và chỉnh sửa thời hạn của các dự án. Được xây dựng bằng Java trên nền Android Studio, Task phù hợp với sinh viên, người đi làm hoặc bất kỳ ai cần một công cụ quản lý công việc cơ bản và hiệu quả.*
 
-🚀 Tính năng
+## 🚀 Tính năng
 
-  Thêm dự án mới với tên dự án, mô tả và thời hạn
+  * Thêm dự án mới với tên dự án, mô tả và thời hạn
 
-  Chỉnh sửa thông tin và thời gian của dự án đã tạo
+  * Chỉnh sửa thông tin và thời gian của dự án đã tạo
 
-  Xóa dự án khỏi danh sách
+  * Xóa dự án khỏi danh sách
 
-  Giao diện đơn giản, dễ sử dụng
+  * Giao diện đơn giản, dễ sử dụng
 
-  Thiết kế theo chuẩn Material Design
+  * Thiết kế theo chuẩn Material Design
 
-🛠️ Công nghệ sử dụng
+## 🛠️ Công nghệ sử dụng
 
-Ngôn ngữ: Java
+  * Ngôn ngữ: Java
 
-IDE: Android Studio
+  * IDE: Android Studio
 
 📷 Screenshot :
 
@@ -28,26 +28,25 @@ IDE: Android Studio
 <img width="378" height="841" alt="image" src="https://github.com/user-attachments/assets/8657c01e-e66f-49a3-8e01-2baa32657b58" />
 
 
+## 📦 Cài đặt & chạy ứng dụng
 
-📦 Cài đặt & chạy ứng dụng
+* Clone repository:
 
-Clone repository:
+  ` git clone https://github.com/lephuoctai/task `
 
-git clone https://github.com/lephuoctai/task
+* Mở bằng Android Studio:
 
-Mở bằng Android Studio:
+  a. Chọn File > Open
 
-Chọn File > Open
+  b. Trỏ đến thư mục dự án task
 
-Trỏ đến thư mục dự án task
+  c. Build project:
 
-Build project:
+  d. Nhấn Sync Project with Gradle Files
 
-Nhấn Sync Project with Gradle Files
+  e. Chạy trên thiết bị ảo (AVD) hoặc thiết bị thật
 
-Chạy trên thiết bị ảo (AVD) hoặc thiết bị thật
-
-📂 Cấu trúc dự án (sơ lược)
+## 📂 Cấu trúc dự án (sơ lược)
 
 <img width="416" height="229" alt="image" src="https://github.com/user-attachments/assets/28a61097-c88a-4ecd-ba77-48a6a854baa9" />
 
