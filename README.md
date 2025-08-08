@@ -1,3 +1,5 @@
+
+<img width="1200" height="841" alt="image" src="https://raw.githubusercontent.com/lephuoctai/task/refs/heads/master/thumb.png" />
 # 📋 Task List – Android To-Do App
 
 *Ứng dụng Task List là một app Android đơn giản hỗ trợ người dùng tạo, quản lý, và chỉnh sửa thời hạn của các dự án. Được xây dựng bằng Java trên nền Android Studio, Task phù hợp với sinh viên, người đi làm hoặc bất kỳ ai cần một công cụ quản lý công việc cơ bản và hiệu quả.*
