@@ -1,5 +1,10 @@
 package com.todo.task;
 
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -119,18 +124,35 @@ public class Task {
     }
 
     // Trạng thái deadline
-    public String getStatus() {
+    public SpannableString getStatus() {
         LocalDateTime completed = parseDateTime(dateCompleted);
+
+        String statusText;
+        int color;
+
         if (completed == null) {
-            return "Trạng thái: Không xác định (thiếu ngày hoàn thành)";
-        }
-        int dayLeft = dayLeft();
-        if (dayLeft < 0) {
-            return "Trạng thái: Quá hạn (vượt " + (-dayLeft) + " ngày)";
+            statusText = "Trạng thái: Không xác định (thiếu ngày hoàn thành)";
+            color = Color.parseColor("#757575"); // xám
         } else {
-            return "Trạng thái: Còn hạn (" + dayLeft + " ngày còn lại)";
+            int dayLeft = dayLeft();
+            if (dayLeft < 0) {
+                statusText = "Trạng thái: Quá hạn (vượt " + (-dayLeft) + " ngày)";
+                color = Color.parseColor("#D32F2F"); // đỏ nhạt
+            } else if (dayLeft <= 3) {
+                statusText = "Trạng thái: Còn hạn (" + dayLeft + " ngày còn lại)";
+                color = Color.parseColor("#F57C00"); // cam nhạt
+            } else {
+                statusText = "Trạng thái: Còn hạn (" + dayLeft + " ngày còn lại)";
+                color = Color.parseColor("#388E3C"); // xanh rêu nhạt
+            }
         }
+
+        SpannableString spannable = new SpannableString(statusText);
+        spannable.setSpan(new ForegroundColorSpan(color), 0, statusText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
     }
+
+
 
     @Override
     public String toString() {
