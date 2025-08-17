@@ -16,31 +16,41 @@
         tools:ignore="MissingClass">
         <activity
             android:name=".WelcomeScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".SignInUp.SignUp"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SignInUp.SignIn"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".projectList"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ResetPassword"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddProjectActivity" />
-        <activity android:name=".ProjectListActivity" />
-        <activity android:name=".EditProjectActivity" />
+        <activity android:name=".AddProjectActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ProjectListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EditProjectActivity"
+            android:screenOrientation="portrait"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 

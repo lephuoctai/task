@@ -1,6 +1,7 @@
 package com.todo.task.SignInUp;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,8 +28,8 @@ public class SignIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_in);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Intent intent = new Intent(this, SignUp.class);
         inputName = findViewById(R.id.name);
         inputPassword = findViewById(R.id.password);
         registerBtn = findViewById(R.id.register_btn);
@@ -36,7 +37,10 @@ public class SignIn extends AppCompatActivity {
         resetPasswordBtn = findViewById(R.id.resetpasswordbtn);
 
 // Chuyển sang màn hình đăng ký
-        registerBtn.setOnClickListener(v -> startActivity(intent));
+        registerBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SignUp.class);
+            startActivity(intent);
+        });
 // Chuyển sang
         resetPasswordBtn.setOnClickListener(v -> {
             Intent resetIntent = new Intent(SignIn.this, ResetPassword.class);
